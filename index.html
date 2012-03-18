@@ -1,0 +1,96 @@
+<!DOCTYPE>
+<html>
+<head>
+  <title>InstaGame</title>
+  <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="instagame.css" rel="stylesheet" type="text/css"/>
+  <link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
+  <script src="../js/jquery.js"></script>
+  <script src="../js/underscore.js"></script>
+  <script src="../js/backbone.js"></script>
+  <script src="js/app.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-30073947-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</head>
+<body>
+  <div id="controls"></div>
+  <div id="instructions-area"></div>
+  <div id="user-photos"></div>
+  <div id="photos"></div>
+  <div id="guess-correct">Correct!</div>
+  <div id="guess-wrong">Wrong!</div>
+  
+  <script type="text/template" id="login-template">
+    <button id="login-button" class="btn btn-inverse" onClick="parent.location='https://instagram.com/oauth/authorize/?client_id=6b6ef97d767647f0882b711c35f17b75&redirect_uri=http://brycefrye.com/instagame&scope=relationships&response_type=token'">Log in with Instagram</button>
+    <button id="login-button" class="btn btn-inverse" onClick="parent.location='http://brycefrye.com/instagame-demo'">Try the demo</button>
+  </script>
+  
+  <script type="text/template" id="play-template">
+    <div id="difficulty">
+      <span id="easy" class="btn btn-info">Easy</span>
+      <span id="hard" class="btn btn-warning">Hard</span>
+      <span id="expert" class="btn btn-danger">Expert</span>
+    </div>
+  </script>
+  
+  <script type="text/template" id="instructions-template">
+    <div id="instructions">
+      <div id="header">Welcome to InstaGame!</div>
+      <p>After logging in and choosing a difficulty level, your Instagram feed will be displayed one photo at a time along with a few profile pictures. Your goal is to guess which of your friends posted each photo. Good luck!</p>
+      <p><span class="easy">Easy</span> mode = <span class="easy">3</span> choices</p>
+      <p><span class="hard">Hard</span> mode = <span class="hard">5</span> choices</p>
+      <p><span class="expert">Expert</span> mode = <span class="expert">???</span></p>
+    </div>
+  </script>
+  
+  <script type="text/template" id="photo-error-template">
+    <div id="instructions">
+      <div id="header">Oops!</div>
+      <p>Sorry, but you need at least ten photos in your Instagram feed to play.</p>
+    </div>
+  </script>
+  
+  <script type="text/template" id="follow-error-template">
+    <div id="instructions">
+      <div id="header">Oops!</div>
+      <p>Sorry, but you must be following at least five people on Instagram to play.</p>
+    </div>
+  </script>
+  
+  <script type="text/template" id="score-template">
+    <div id="score">
+      <div id="header">
+        Score: <%= score %> points<br />
+        out of <%= (total * 100) - 100 %> possible.
+      </div>
+    </div>
+  </script>
+  
+  <script type="text/template" id="photo-template">
+    <div class="photo">
+      <img src="<%= this.model.get('images').standard_resolution.url %>"/>
+    </div>
+  </script>
+  
+  <script type="text/template" id="user-template">
+    <div class="user-photo">
+      <img src="<%= this.model.get('profile_picture') || this.model.get('user').profile_picture %>"/>
+      <span class="username"><%= this.model.get('username') || this.model.get('user').username %></span>
+    </div>
+  </script>
+  
+</body>
+</html>

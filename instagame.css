@@ -1,0 +1,141 @@
+body {
+  background-image:url('irongrip.png');
+  font-family: 'Vollkorn';
+}
+
+li {
+  list-style-type: none;
+}
+
+#controls {
+ background-image:url('light_alu.png');
+ width: 615px;
+ height: 50px;
+ margin: auto;
+ text-align: center;
+ padding-top: 14px;
+ border-bottom-left-radius: 6px;
+ border-bottom-right-radius: 6px;
+}
+#controls #login-button {
+  width: 276px;
+  font-size: 18px;
+  font-family: 'Vollkorn';
+}
+
+#instructions-area {
+  background-image:url('light_alu.png');
+  padding-top: 70px;
+  margin: 35px auto auto auto;
+  width: 800px;
+  height: 70%;
+  min-height: 620px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 12px;
+}
+
+#header {
+  font-size: 60px;
+  padding-bottom: 40px;
+  line-height: 75px;
+}
+
+#instructions p {
+  font-size: 34px;
+  font-family: 'Vollkorn';
+  line-height: 50px;
+  padding: 0 14px 20px 14px;
+}
+
+#difficulty span {
+  width: 160px;
+  font-size: 18px;
+}
+
+#score {
+  text-align: center;
+  font-size: 48px;
+}
+
+#user-photos {
+  position: absolute;
+  display: inline-block;
+  top: 6px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+}
+
+.user-photo {
+  display: inline-block;
+}
+
+#user-photos img {
+  display: inline-block;
+}
+
+#user-photos .username {
+  width: 150px;
+  display: block;
+  background-color: white;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+#photos {
+  position: absolute;
+  top: 180px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 2px;
+}
+
+#photos img {
+  border-radius: 5px;
+}
+
+#guess-correct {
+  display: none;
+  background-color: green;
+  opacity: 0.8;
+  position: relative;
+  top: 180px;
+  margin: auto;
+  width: 615px;
+  height: 400px;
+  text-align: center;
+  color: white;
+  font-size: 90px;
+  padding-top: 215px;
+  border-radius: 5px;
+}
+
+#guess-wrong {
+  display: none;
+  background-color: red;
+  opacity: 0.7;
+  position: relative;
+  top: 180px;
+  margin: auto;
+  width: 615px;
+  height: 400px;
+  text-align: center;
+  color: white;
+  font-size: 90px;
+  padding-top: 215px;
+  border-radius: 5px;
+}
+
+.easy {
+  color: #3fa5c3;
+}
+
+.hard {
+  color: #f9a227;
+}
+
+.expert {
+  color: #d34842;
+}
