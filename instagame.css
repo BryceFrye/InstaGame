@@ -1,5 +1,5 @@
 body {
-  background-image:url('irongrip.png');
+  background-image:url('images/irongrip.png');
   font-family: 'Vollkorn';
 }
 
@@ -8,7 +8,7 @@ li {
 }
 
 #controls {
- background-image:url('light_alu.png');
+ background-image:url('images/light_alu.png');
  width: 615px;
  height: 50px;
  margin: auto;
@@ -24,7 +24,7 @@ li {
 }
 
 #instructions-area {
-  background-image:url('light_alu.png');
+  background-image:url('images/light_alu.png');
   padding-top: 70px;
   margin: 35px auto auto auto;
   width: 800px;
