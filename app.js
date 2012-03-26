@@ -3,6 +3,18 @@ $(function(){
   window.Photo = Backbone.Model.extend({
   });
   
+  window.User = Backbone.Model.extend({
+    initialize: function() {
+      this.token = window.location.hash.slice(1,99);  
+    },
+    url: function() {
+      return 'https://api.instagram.com/v1/users/self?'+this.token+'&callback=?';
+    },
+    parse: function(response) {
+      return response.data;
+    }
+  });
+  
   window.PhotoFeed = Backbone.Collection.extend({
     model: Photo,
     
@@ -133,8 +145,15 @@ $(function(){
       $("#score").remove();
       $("#instructions").fadeOut('fast');
       $("#instructions-area").fadeOut('fast',function() {
-        self.getPhotos();
+        self.getUser();
       });
+    },
+    getUser: function() {
+      var self = this;
+      this.user = new User();
+      this.user.fetch({success: function(model, response){
+        self.getPhotos();
+      }});
     },
     getPhotos: function() {
       var self = this;
@@ -144,13 +163,17 @@ $(function(){
       } else {
         this.photoCollection = new PhotoFeed();
       }
-      this.photoCollection.fetch({success: function(model, response) {
-        self.photoCollection.models.sort(self.randomize);
-        self.photoCollection.models.forEach(function(photo){
-          var row = new PhotoView({ model: photo });
-          $("#photos").append(row.el);
+      this.photoCollection.fetch({success: function(photos, response) {
+        photos.models.sort(self.randomize);
+        photos.models.forEach(function(photo){
+          if ( photo.get('user').username == self.user.get('username') ) {
+            photo.destroy();
+          } else {
+            var row = new PhotoView({ model: photo });
+            $("#photos").append(row.el);
+          }
         });
-        if ( self.photoCollection.models.length > 9 ) {
+        if ( photos.models.length > 9 ) {
           $("#controls").slideUp('fast');
           $(".photo").hide();
           $(".photo:first").addClass("active").fadeIn('fast');
@@ -181,9 +204,9 @@ $(function(){
     getUsers: function() {
       var self = this;
       this.userCollection = new UserPhotos();
-      this.userCollection.fetch({success: function(model, response) {
-        if ( self.userCollection.models.length > 4 ) {
-          self.findPhoto();
+      this.userCollection.fetch({success: function(userPhotos, response) {
+        if ( userPhotos.length > 4 ) {
+          self.findUserPhoto();
         } else {
           self.notFollowingEnough();
         }
@@ -195,16 +218,16 @@ $(function(){
       this.photoCollection.models.forEach(function(photo){
         self.userCollection.push(photo);
       });
-      this.findPhoto();
+      this.findUserPhoto();
     },
-    findPhoto: function() {
+    findUserPhoto: function() {
       var self = this;
       if ( this.difficulty == 4 ) {
         var userCollectionCopy = _.clone(this.userCollection);
       } else {
         var userCollectionCopy = _.clone(this.userCollection.models);
       }
-      var userArray = new Array();
+      userArray = new Array();
       userCollectionCopy.forEach(function(user){
         var username = user.get('username') || user.get('user').username;
         if ( username == self.photoCollection.models[self.currentPhoto].get('user').username ) {
@@ -252,7 +275,7 @@ $(function(){
           $(".active").remove();
           $("#user-photos span").remove();
           $(".photo:first").addClass("active").fadeIn('fast');
-          self.findPhoto();
+          self.findUserPhoto();
           console.log("Score: "+self.score);
         });
       } else {
