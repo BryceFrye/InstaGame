@@ -167,6 +167,7 @@ $(function(){
         photos.models.sort(self.randomize);
         photos.models.forEach(function(photo){
           if ( photo.get('user').username == self.user.get('username') ) {
+            photos.models = _.without(photos.models, photo);
             photo.destroy();
           } else {
             var row = new PhotoView({ model: photo });
